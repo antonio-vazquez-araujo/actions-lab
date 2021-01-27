@@ -24,7 +24,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - name: PreTest
-        run: ls -l dist
+        run: ls -l "actions-lab/actions-lab/dist"
       - name: sign
         uses: DanaBear/code-sign-action@v4
         with:
@@ -35,4 +35,4 @@ jobs:
           folder: 'dist'
           recursive: true
       - name: Test
-        run: ls -l dist
+        run: ls -l "actions-lab/actions-lab/dist"
