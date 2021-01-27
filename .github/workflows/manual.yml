@@ -30,3 +30,6 @@ jobs:
         #    certificatename: '${{ secrets.CERTNAME }}'
           folder: 'dist'
           recursive: true
+      - name: Test
+        run: |
+          ls -l dist
