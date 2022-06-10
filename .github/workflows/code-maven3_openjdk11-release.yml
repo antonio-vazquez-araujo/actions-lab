@@ -73,11 +73,7 @@ jobs:
       - name: Prepare release body content
         run: |
           echo "this is the release body" > /tmp/github-release-body.md
-
-          if [[ "${{ contains(env.RELEASE_LABELS, 'release-mode/skip-changelog') }}" != "true" ]] ;
-          then
-              echo "this is another type of release body" >> /tmp/github-release-body.md
-          fi
+          echo "this is another type of release body" >> /tmp/github-release-body.md
 
       - name: GitHub Release / Create release
         uses: actions/create-release@v1.1.4
