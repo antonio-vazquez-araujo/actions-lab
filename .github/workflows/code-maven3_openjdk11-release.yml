@@ -1,0 +1,107 @@
+---
+name: code-maven-release
+
+on:
+  pull_request:
+    types: [closed]
+    branches: ["main", "main-*"]
+    paths: ["code/**", ".github/workflows/code**"]
+  workflow_dispatch:
+    inputs:
+      BASELINE:
+        description: "Baseline branch"
+        required: true
+        default: "main"
+      RELEASE_LABELS:
+        description: "Release labels (comma separated list)"
+        required: true
+        default: "release-type/current"
+
+env:
+  WORKFLOW_VERSION: 1.40.1
+  GITHUB_REGISTRY: ghcr.io
+  RELEASE_VERSION: 2.0.0-SNAPSHOT
+
+jobs:
+  release:
+    name: Release
+    needs: [msi]
+    concurrency: code-release-${{ github.ref }}
+    if: github.event_name == 'workflow_dispatch'
+      || (github.event.pull_request.merged == true
+      && contains(join(github.event.pull_request.labels.*.name, ', '), 'release-type'))
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Setup the environment
+        run: |
+          echo "BASELINE_BRANCH=${{ github.event.inputs.BASELINE || github.ref }}" >> "$GITHUB_ENV"
+
+      - name: Setup current release type version
+        if: contains(env.RELEASE_LABELS, 'release-type/current')
+        run: echo "CD_ARGS=release" >> "$GITHUB_ENV"
+
+      - name: Setup patch release type version
+        if: contains(env.RELEASE_LABELS, 'release-type/hotfix')
+          || contains(env.RELEASE_LABELS, 'release-type/multi-hotfix')
+          || contains(env.RELEASE_LABELS, 'release-type/patch')
+        run: |
+          echo "CD_ARGS=release --patch" >> "$GITHUB_ENV"
+          echo "MVN_RELEASE_TYPE=-DreleaseType=patch" >> "$GITHUB_ENV"
+
+      - name: Setup minor release type version
+        if: contains(env.RELEASE_LABELS, 'release-type/minor')
+        run: |
+          echo "CD_ARGS=release --minor" >> "$GITHUB_ENV"
+          echo "MVN_RELEASE_TYPE=-DreleaseType=minor" >> "$GITHUB_ENV"
+
+      - name: Setup major release type version
+        if: contains(env.RELEASE_LABELS, 'release-type/major')
+        run: |
+          echo "CD_ARGS=release --major" >> "$GITHUB_ENV"
+          echo "MVN_RELEASE_TYPE=-DreleaseType=major" >> "$GITHUB_ENV"
+
+      - name: Setup force option
+        if: contains(env.RELEASE_LABELS, 'release-mode/force')
+        run: |
+          echo "CD_ARGS=$CD_ARGS --force-release-mode" >> "$GITHUB_ENV"
+          echo "MVN_RELEASE_ARGS=-DreleaseForce" >> "$GITHUB_ENV"
+
+      - name: GitHub Release / Get final version number from latest tag in branch
+        if: ${{ contains(env.RELEASE_LABELS, 'release-mode/skip-changelog') }}
+        run: echo "RELEASE_VERSION=$(git describe --tags --abbrev=0)" >> "$GITHUB_ENV"
+
+      - name: Prepare release body content
+        run: |
+          echo "this is the release body" > /tmp/github-release-body.md
+
+          if [[ "${{ contains(env.RELEASE_LABELS, 'release-mode/skip-changelog') }}" != "true" ]] ;
+          then
+              echo "this is another type of release body" >> /tmp/github-release-body.md
+          fi
+
+      - name: GitHub Release / Create release
+        uses: actions/create-release@v1.1.4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN_PUSH }}
+        with:
+          tag_name: ${{ env.RELEASE_VERSION }}
+          release_name: ${{ env.RELEASE_VERSION }}
+          body_path: |
+            /tmp/github-release-body.md
+
+      - name: GitHub Release create fake artifact
+        run: |
+          dir > ${{ runner.temp }}/fake-artifact.msi.signed
+
+      - name: Upload signed msi to the release assets
+        id: upload-release-asset
+        if: steps.create_release.outputs.upload_url
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_content_type: application/msi
+          asset_path: ${{ runner.temp }}/fake-artifact.msi.signed
+          asset_name: AmigaLauncherSetup-${{ env.RELEASE_VERSION }}.msi
