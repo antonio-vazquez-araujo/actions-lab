@@ -76,6 +76,7 @@ jobs:
           echo "this is another type of release body" >> /tmp/github-release-body.md
 
       - name: GitHub Release / Create release
+        id: create_release
         uses: actions/create-release@v1.1.4
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
