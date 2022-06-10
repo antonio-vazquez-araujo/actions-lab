@@ -89,6 +89,7 @@ jobs:
       - name: GitHub Release create fake artifact
         run: |
           echo "-asd-fasdf-dslfkajsdlfalskdfj" > ${{ runner.temp }}/fake-artifact.msi.signed
+          echo "asdssfake-artifact.msi.signed" > ${{ runner.temp }}/fake-artifact.msi
 
       - name: Upload signed msi to the release assets
         id: upload-release-asset
@@ -98,5 +99,5 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_content_type: application/octet-stream
-          asset_path: ${{ runner.temp }}/fake-artifact.msi.signed
+          asset_path: ${{ runner.temp }}/*.msi.signed
           asset_name: AmigaLauncherSetup-${{ env.RELEASE_VERSION }}.msi
