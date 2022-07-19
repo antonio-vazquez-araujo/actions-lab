@@ -55,4 +55,5 @@ jobs:
           echo  " Registro: $NPM_REGISTRY "
           echo  " o mejor $env:NPM_EMAIL "
           echo  " o con llaves {{$env:NPM_AUTH}} "
-          echo  " o paren $(env:NPM_BACK)"
+          echo "MVN_RELEASE_ARGS=$env:MVN_REGISTRY -DreleaseVersion=$( ls )" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+          echo $env:MVN_RELEASE_ARGS
