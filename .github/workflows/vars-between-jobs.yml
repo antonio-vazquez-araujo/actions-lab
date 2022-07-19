@@ -12,15 +12,16 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-latest]
-    env:
-      calculation: "433"
     outputs:
       result: ${{ steps.set-calculation.outputs.calculation }}
     steps:
       - name: calculate the number
         id: set-calculation
-        shell: bash
-        run: echo "::set-output name=calculation::${{env.calculation}}"
+        shell: powershell
+        run: |
+          ls > $env:Temp/.version
+          $version = $( Get-Content $env:Temp/.version )
+          echo "::set-output name=calculation::$version"
 
   show-result:
     runs-on: ${{ matrix.os }}
