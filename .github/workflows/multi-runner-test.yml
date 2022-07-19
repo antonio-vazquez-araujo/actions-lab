@@ -26,7 +26,7 @@ jobs:
         run: |
           echo  "Variable del env del workflow: ${{ env.MY_NAME }} es mi nombre o bien $env:MY_NAME y $env:nombre o bien ${{env.nombre}} es mi alias"
 
-      - name: fin
+      - name: finAL
         run: |
           echo "Variable del env del workflow: ${{ env.MY_NAME }} "
           echo "Variable del env de github $env:nombre o bien ${{env.nombre}}"
