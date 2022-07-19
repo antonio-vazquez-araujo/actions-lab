@@ -13,7 +13,7 @@ jobs:
       matrix:
         os: [windows-latest]
     env:
-      calculation: $MY_NAME "->" env.$MY_EMAIL
+      calculation: $MY_NAME
     outputs:
       result: ${{ steps.set-calculation.outputs.calculation }}
     steps:
