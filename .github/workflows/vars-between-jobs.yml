@@ -3,30 +3,29 @@ name: Vars between jobs
 on: [push, pull_request]
 
 jobs:
-  # This workflow contains a single job called "build"
-  build:
+  calculate:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macOS-latest, windows-latest]
+        os: [windows-latest]
     env:
-      nombre: "Antonio"
+      calculation: ${{ 34 + 54 }}
     outputs:
-      result: ${{ steps.calculation.outputs.calculation }}
+      result: ${{ steps.set-calculation.outputs.calculation }}
     steps:
       - name: calculate the number
-        id: calculation
-        run: echo "::set-output name=calculation::${{env.nombre}}"
+        id: set-calculation
+        run: echo "::set-output name=calculation::${{env.calculation}}"
 
-  createInstaller:
+  show-result:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macOS-latest, windows-latest]
+        os: [ubuntu-latest]
     needs:
-      - build
+      - calculate
     steps:
-      - name: Print build number
-        run: echo ${{needs.build.outputs.result}}
+      - name: Print calculate result
+        run: echo ${{needs.calculate.outputs.result}}
