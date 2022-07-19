@@ -10,12 +10,14 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macOS-latest, windows-latest]
+    env:
+      nombre: "Antonio"
     outputs:
       result: ${{ steps.calculation.outputs.calculation }}
     steps:
       - name: calculate the number
         id: calculation
-        run: echo "::set-output name=calculation::(20+30)"
+        run: echo "::set-output name=calculation::${{env.nombre}}"
 
   createInstaller:
     runs-on: ${{ matrix.os }}
