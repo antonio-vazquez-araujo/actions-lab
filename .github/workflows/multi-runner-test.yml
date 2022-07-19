@@ -18,9 +18,10 @@ jobs:
       - name: uno
         run: |
           echo "nombre='Toño'" >> $env:GITHUB_ENV
+          echo "nombre='Toño'" >> $GITHUB_ENV
       - name: dos
         run: |
           echo "Mi nombre es $Env:nombre "
       - name: Remove unsigned files
         run: |
-          echo  "${{ env.MY_NAME }}/ es mi nombre y $env:nombre es mi alias"
+          echo  "${{ env.MY_NAME }} es mi nombre y $env:nombre es mi alias"
