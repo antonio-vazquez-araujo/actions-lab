@@ -56,5 +56,6 @@ jobs:
           echo  " o mejor $env:NPM_EMAIL "
           echo  " o con llaves {{$env:NPM_AUTH}} "
           echo "443322" > $env:Temp/.version
+          Get-Content $env:Temp/.version | Write-Host
           echo "MVN_RELEASE_ARGS=$( Get-Content $env:Temp/.version )" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
           echo "Resultado -> $env:MVN_RELEASE_ARGS"
