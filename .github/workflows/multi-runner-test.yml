@@ -2,14 +2,18 @@ name: Test
 
 on: [push, pull_request]
 
+env:
+  MY_NAME: Antonio
+
 jobs:
   build:
+    env:
+      MY_DNI: 4343453
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, macOS-latest, windows-latest]
-
     steps:
       - name: uno
         run: |
@@ -17,14 +21,6 @@ jobs:
       - name: dos
         run: |
           echo "Mi nombre es $Env:nombre "
-
-      - name: Set the value
-        id: step_one
+      - name: Remove unsigned files
         run: |
-          echo "action_state=yellow" >> $GITHUB_ENV
-      - name: Use the value
-        id: step_two
-        run: |
-          echo "Funciona esto?"
-          echo "${{ env.action_state }}" # This will output 'yellow'          
-          echo "Fin"
+          echo  "${{ env.MY_NAME }}/ es mi nombre y $env.MYDNI es mi dni"
