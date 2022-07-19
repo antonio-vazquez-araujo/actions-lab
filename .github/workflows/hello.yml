@@ -12,16 +12,19 @@ jobs:
       Greeting: Hello
     steps:
       - name: "Say Hello Mona it's Monday"
-        run: echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"
+        run: |
+          echo "$Greeting $First_Name. Today is $DAY_OF_WEEK!"
+          echo "nombre=$env:First_Name" |  Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
         env:
           First_Name: Mona
 
   greeting_job_win:
     runs-on: windows-latest
+    needs: greeting_job_linux
     env:
       Greeting: Hello
     steps:
       - name: "Say Hello Mona it's Monday"
-        run: echo "$env:Greeting $env:First_Name. Today is $env:DAY_OF_WEEK!"
+        run: echo "$env:Greeting $env:First_Name. Today is $env:DAY_OF_WEEK!. The name is $env:nombre"
         env:
           First_Name: Mona
