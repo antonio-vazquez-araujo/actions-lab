@@ -51,4 +51,4 @@ jobs:
           NPM_AUTH: mypassword
           NPM_REGISTRY: https://inditex.jfrog.io/inditex/api/npm/node-public/
         run: |
-          echo  " Registro: $NPM_REGISTRY o mejor $env:NPM_REGISTRY"
+          echo  " Registro: $NPM_REGISTRY o mejor $env:NPM_REGISTRY o con llaves ${{env:NPM_REGISTRY}} o paren $(env:NPM_REGISTRY)"
