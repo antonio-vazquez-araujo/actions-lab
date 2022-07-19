@@ -31,5 +31,3 @@ jobs:
           echo "Variable del env del workflow: ${{ env.MY_NAME }} "
           echo "Variable del env de github $env:nombre o bien ${{env.nombre}}"
           echo "En windows es $env:GITHUB_ENV y en linux y mac $GITHUB_ENV"
-          # echo  "Otra forma sería: ${{ env:MY_NAME }}" ESTA FORMA NO SE ADMITE!!!!!!!
-          # echo  "Otra forma sería: ${{ env:MY_NAME }}" ESTA FORMA NO SE ADMITE!!!!!!!
