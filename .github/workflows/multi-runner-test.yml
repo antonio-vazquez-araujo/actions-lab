@@ -24,7 +24,7 @@ jobs:
           echo "Mi nombre es $Env:nombre "
       - name: Remove unsigned files
         run: |
-          echo  "Variable del env del workflow: ${{ env.MY_NAME }} es mi nombre o bien $env:MY_NAME y $env:nombre o bien ${{env.nombre}} es mi alias"
+          echo  "Variable del env del workflow: ${{ env.MY_NAME }} es mi nombre o bien y $env:nombre o bien ${{env.nombre}} es mi alias"
 
       - name: finAL
         run: |
