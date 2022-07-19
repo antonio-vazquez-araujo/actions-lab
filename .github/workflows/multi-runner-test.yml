@@ -25,3 +25,4 @@ jobs:
       - name: Remove unsigned files
         run: |
           echo  "${{ env.MY_NAME }} es mi nombre o bien $env:MY_NAME y $env:nombre o bien ${{env.nombre}} es mi alias"
+          echo  "Otra forma sería: ${{ env:MY_NAME }}"
