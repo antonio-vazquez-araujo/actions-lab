@@ -21,7 +21,7 @@ jobs:
         run: |
           ls > $env:Temp/.version
           $version = $( Get-Content $env:Temp/.version )
-          echo "::set-output name=calculation::$version"
+          echo "::set-output name=calculation::${{ $version }}"
 
   show-result:
     runs-on: ${{ matrix.os }}
