@@ -27,4 +27,4 @@ jobs:
       - build
     steps:
       - name: Print build number
-        run: echo ${{jobs.build.outputs.result}}
+        run: echo ${{needs.build.outputs.result}}
