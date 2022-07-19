@@ -13,12 +13,13 @@ jobs:
       matrix:
         os: [windows-latest]
     env:
-      calculation: "me llamo ${{env.MY_NAME}}"
+      calculation: "433"
     outputs:
       result: ${{ steps.set-calculation.outputs.calculation }}
     steps:
       - name: calculate the number
         id: set-calculation
+        shell: bash
         run: echo "::set-output name=calculation::${{env.calculation}}"
 
   show-result:
