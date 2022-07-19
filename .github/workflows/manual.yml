@@ -26,5 +26,8 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Runs a single command using the runners shell
+      - name: Send value to enviroment from windows
+        run: dir /p
+          echo "x=321" >> "$GITHUB_ENV"
       - name: Send greeting
-        run: echo "Hello ${{ github.event.inputs.name }}"
+        run: echo "Hello ${{ github.event.inputs.name }} the value is ${{env.x}}"
