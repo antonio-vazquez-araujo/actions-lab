@@ -2,8 +2,8 @@ name: Vars between jobs
 
 on: [push, pull_request]
 env:
-  MY_NAME: Antonio
-  MY_EMAIL: antoniova@ext.inditex.com
+  MY_NAME: "Antonio"
+  MY_EMAIL: "antoniova@ext.inditex.com"
 
 jobs:
   calculate:
