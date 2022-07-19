@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: uno
         run: |
-          echo "nombre='Toño'" >> $env:GITHUB_ENV
+          # echo "nombre='Toño'" >> $env:GITHUB_ENV
           echo "nombre='Toño'" >> $GITHUB_ENV
       - name: dos
         run: |
