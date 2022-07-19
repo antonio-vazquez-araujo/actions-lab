@@ -10,7 +10,7 @@ jobs:
       matrix:
         os: [windows-latest]
     env:
-      calculation: ${{ 34 + 54 }}
+      calculation: ${{ (34 + 54) }}
     outputs:
       result: ${{ steps.set-calculation.outputs.calculation }}
     steps:
