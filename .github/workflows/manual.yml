@@ -50,8 +50,9 @@ jobs:
           NPM_EMAIL: antonio@xx.com
           NPM_AUTH: mypassword
           NPM_REGISTRY: https://inditex.jfrog.io/inditex/api/npm/node-public/
+          NPM_BACK: https://inditex.jfrog.io/inditex/api/npm/node-public/
         run: |
           echo  " Registro: $NPM_REGISTRY "
-          echo  " o mejor $env:NPM_REGISTRY "
-          echo  " o con llaves ${{env:NPM_REGISTRY}} "
-          echo  " o paren $(env:NPM_REGISTRY)"
+          echo  " o mejor $env:NPM_EMAIL "
+          echo  " o con llaves ${{env:NPM_AUTH}} "
+          echo  " o paren $(env:NPM_BACK)"
