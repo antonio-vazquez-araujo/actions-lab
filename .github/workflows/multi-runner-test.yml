@@ -22,12 +22,13 @@ jobs:
       - name: dos
         run: |
           echo "Mi nombre es $Env:nombre "
+
       - name: Remove unsigned files
         run: |
-          echo  "Variable del env del workflow: ${{ env.MY_NAME }} es mi nombre o bien y $env:nombre o bien ${{env.nombre}} es mi alias"
+          echo  "Variable del env del workflow: ${{ env.MY_NAME }}"
+          echo "Variable del env de github: $env:nombre o bien ${{env.nombre}}"
 
-      - name: finAL
+      - name: final
         run: |
-          echo "Variable del env del workflow: ${{ env.MY_NAME }} "
-          echo "Variable del env de github $env:nombre o bien ${{env.nombre}}"
-          echo "En windows es $env:GITHUB_ENV y en linux y mac $GITHUB_ENV"
+          echo "Valor de env:GITHUB_ENV: $env:GITHUB_ENV"
+          echo "Valor de GITHUB_ENV: $GITHUB_ENV"
