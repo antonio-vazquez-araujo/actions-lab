@@ -31,4 +31,4 @@ jobs:
       - calculate
     steps:
       - name: Print calculate result
-        run: echo ${{needs.calculate.outputs.result}}
+        run: echo "El resultado es ${{needs.calculate.outputs.result}}. Fin"
