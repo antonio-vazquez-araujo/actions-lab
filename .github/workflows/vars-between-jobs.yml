@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: calculate the number
         id: calculation
-        run: echo "::set-output name=calculation::${{20+30}}"
+        run: echo "::set-output name=calculation::(20+30)"
 
   createInstaller:
     runs-on: ${{ matrix.os }}
