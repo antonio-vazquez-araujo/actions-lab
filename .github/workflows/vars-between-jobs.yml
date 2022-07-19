@@ -1,6 +1,9 @@
 name: Vars between jobs
 
 on: [push, pull_request]
+env:
+  MY_NAME: Antonio
+  MY_EMAIL: antoniova@ext.inditex.com
 
 jobs:
   calculate:
@@ -10,7 +13,7 @@ jobs:
       matrix:
         os: [windows-latest]
     env:
-      calculation: ${{ (34 + 54) }}
+      calculation: ${{ $MY_NAME -> $MY_EMAIL }}
     outputs:
       result: ${{ steps.set-calculation.outputs.calculation }}
     steps:
