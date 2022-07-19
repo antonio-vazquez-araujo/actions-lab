@@ -15,4 +15,5 @@ jobs:
         run: |
           echo "nombre=Antonio" >> env:GITHUB_ENV
       - name: dos
+        run: |
           echo "Mi nombre es $env:nombre"
