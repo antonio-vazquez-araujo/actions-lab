@@ -12,6 +12,10 @@ jobs:
       - run: echo 'Hi ${{ env.mascot }}' # Hi Octocat
         env:
           mascot: Octocat
+      - name: pruebas
+        if: contains(env.mascot, 'Mo')
+        run: |
+          echo "contiene Mo : ${{ env.mascot}}
 
   linux_job:
     runs-on: ubuntu-latest
@@ -19,3 +23,4 @@ jobs:
       mascot: Tux
     steps:
       - run: echo 'Hi ${{ env.mascot }}' # Hi Tux
+
