@@ -15,7 +15,7 @@ jobs:
       - name: pruebas
         if: contains(env.mascot, 'Mo')
         run: |
-          echo "contiene Mo : ${{ env.mascot}}
+          echo "contiene Mo : ${{ env.mascot}}"
 
   linux_job:
     runs-on: ubuntu-latest
