@@ -19,7 +19,8 @@ jobs:
         id: set-calculation
         shell: powershell
         run: |
-          echo "RUNNER_TEMP -> [" $RUNNER_TEMP "]"
+          echo "RUNNER_TEMP -> [" $env:RUNNER_TEMP "]"
+          echo "RUNNER_TEMP -> [" $Env:RUNNER_TEMP "]"
           echo "runner.temp -> ["${{ runner.temp }} "]"
           ls > $RUNNER_TEMP"/.version"
           cat "${{ runner.temp }}/.version"
