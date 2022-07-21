@@ -19,8 +19,10 @@ jobs:
         id: set-calculation
         shell: powershell
         run: |
+          echo "RUNNER_TEMP -> ["$env:RUNNER_TEMP "]"
+          echo "runner.temp -> ["${{ runner.temp }} "]"
           ls > $env:RUNNER_TEMP"/.version"
-          cat "${{ env.runner.temp }}/.version"
+          cat "${{ runner.temp }}/.version"
           $version = $( Get-Content $env:Temp/.version )
           echo "La version será $(($version))"
           echo "::set-output name=calculation::$(($version))"
