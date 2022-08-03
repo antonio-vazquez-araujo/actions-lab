@@ -1,0 +1,41 @@
+name: Vars between jobs
+
+on: [push, pull_request]
+env:
+  MY_NAME: "Antonio"
+  MY_EMAIL: "antoniova@ext.inditex.com"
+
+jobs:
+  calculate:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest]
+    outputs:
+      result: ${{ steps.set-calculation.outputs.calculation }}
+    steps:
+      - name: calculate the number
+        id: set-calculation
+        shell: powershell
+        run: |
+          echo "RUNNER_TEMP -> [" $env:RUNNER_TEMP "]"
+          echo "RUNNER_TEMP -> [" $Env:RUNNER_TEMP "]"
+          echo "runner.temp -> ["${{ runner.temp }} "]"
+          ls > $RUNNER_TEMP"/.version"
+          cat "${{ runner.temp }}/.version"
+          $version = $( Get-Content $env:Temp/.version )
+          echo "La version será $(($version))"
+          echo "::set-output name=calculation::$(($version))"
+
+  show-result:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+    needs:
+      - calculate
+    steps:
+      - name: Print calculate result
+        run: echo "El resultado es ${{needs.calculate.outputs.result}}. Fin"

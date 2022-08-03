@@ -88,7 +88,8 @@ jobs:
 
       - name: GitHub Release create fake artifact
         run: |
-          dir > ${{ runner.temp }}/fake-artifact.msi.signed
+          echo "-asd-fasdf-dslfkajsdlfalskdfj" > ${{ runner.temp }}/fake-artifact.msi.signed
+          echo "asdssfake-artifact.msi.signed" > ${{ runner.temp }}/fake-artifact.msi
 
       - name: Upload signed msi to the release assets
         id: upload-release-asset

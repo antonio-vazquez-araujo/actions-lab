@@ -1,0 +1,34 @@
+name: Test
+
+on: [push, pull_request]
+
+env:
+  MY_NAME: Antonio
+
+jobs:
+  build:
+    env:
+      MY_DNI: 4343453
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+    steps:
+      - name: uno
+        run: |
+          echo "nombre='Toño'" >> $env:GITHUB_ENV
+          echo "nombre='Toño'" >> $GITHUB_ENV
+      - name: dos
+        run: |
+          echo "Mi nombre es $Env:nombre "
+
+      - name: Remove unsigned files
+        run: |
+          echo  "Variable del env del workflow: ${{ env.MY_NAME }}"
+          echo "Variable del env de github: $env:nombre o bien ${{env.nombre}}"
+
+      - name: final
+        run: |
+          echo "Valor de env:GITHUB_ENV: $env:GITHUB_ENV"
+          echo "Valor de GITHUB_ENV: $GITHUB_ENV"
