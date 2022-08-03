@@ -35,7 +35,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Send value to enviroment from windows
         run: |
-          echo " El repo es ${{env.GITHUB_REPOSITORY}}"
+          echo " El repo es ${{github.repository}}"
           echo "a=111" >> "$GITHUB_ENV"
           echo "b=222" >> $GITHUB_ENV
           echo "c=333" >> $env:GITHUB_ENV
