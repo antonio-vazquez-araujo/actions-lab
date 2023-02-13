@@ -16,18 +16,18 @@ on:
         # Input has to be provided for the workflow to run
         required: true
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs:
-  # This workflow contains a single job called "greet"
-  greet:
-    # The type of runner that the job will run on
-    runs-on: windows
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
+jobs:
+  create-msi-installer:
+    runs-on: windows-2022
+
     steps:
-    # Runs a single command using the runners shell
-    - name: Send greeting
-      shell: cmd
-      run: |
-        echo "Hello ${{ github.event.inputs.name }}"
-        echo "Fin del tema"
+      - name: Run vcvars64.bat
+        shell: cmd
+        run: |
+          cmd /c ""C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Auxiliary/Build/vcvars64.bat""
+          
+      - name: run cl.exe
+        run: |
+          cl /?
+
