@@ -25,6 +25,8 @@ jobs:
       - name: Run vcvars64.bat
         shell: cmd
         run: |
-          cmd /c ""C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Auxiliary/Build/vcvars64.bat""         
+          set
+          cmd /c "C:/Program Files/Microsoft Visual Studio/2022/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
+          set
           cl /?
 
