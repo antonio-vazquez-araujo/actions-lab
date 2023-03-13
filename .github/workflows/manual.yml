@@ -26,7 +26,7 @@ jobs:
     steps:
       - name: Run pruebas
         run: |
-          if ($null -eq "${{ github.event.inputs.RELEASE_CANDIDATE_VERSION }}"){
+          if ("" -eq "${{ github.event.inputs.RELEASE_CANDIDATE_VERSION }}"){
             echo "You must specify the release candidate name!" > .error.log          
             exit 1
           }else{
