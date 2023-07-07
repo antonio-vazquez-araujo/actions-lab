@@ -1,63 +1,35 @@
 # This is a basic workflow that is manually triggered
 
-name: Manual workflow
+name: the-workflow
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
-  pull_request:
-    types: [closed]
-    branches: ["main", "main-*"]
   workflow_dispatch:
-    # Inputs the workflow accepts.
     inputs:
       name:
-        # Friendly description to be shown in the UI instead of 'name'
         description: "Person to greet"
-        # Default value if no value is explicitly provided
-        default: "World"
-        # Input has to be provided for the workflow to run
-        required: true
-      RELEASE_LABELS:
-        description: "Release labels (comma separated list)"
-        required: true
-        default: "release-type/current"
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "greet"
   greet:
     # The type of runner that the job will run on
-    runs-on: windows-2022
+    runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Runs a single command using the runners shell
-      - name: Send value to enviroment from windows
-        run: |
-          echo "a=111" >> "$GITHUB_ENV"
-          echo "b=222" >> $GITHUB_ENV
-          echo "c=333" >> $env:GITHUB_ENV
-          echo "d=444" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-          echo "RELEASE_LABELS=${{ github.event.inputs.RELEASE_LABELS || join(github.event.pull_request.labels.*.name, ', ') }}" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-      - name: Send greeting
-        run: |
-          echo "Hello ${{ github.event.inputs.name }} a-> ${{env.a}} b-> ${{env.b}} c-> ${{env.c}} d-> ${{env.d}}"
-          echo ${{env.RELEASE_LABELS}}
-
-      - name: pruebas
-        env:
-          NPM_EMAIL: antonio@xx.com
-          NPM_AUTH: mypassword
-          NPM_REGISTRY: https://inditex.jfrog.io/inditex/api/npm/node-public/
-          NPM_BACK: https://inditex.jfrog.io/inditex/api/npm/node-public/
-        run: |
-          echo  " Registro: $NPM_REGISTRY "
-          echo  " o mejor $env:NPM_EMAIL "
-          echo  " o con llaves {{$env:NPM_AUTH}} "
-          echo "443322" > $env:Temp/.version
-          Get-Content $env:Temp/.version | Write-Host
-          echo "MVN_RELEASE_ARGS=$( Get-Content $env:Temp/.version )" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
-      - name: otro
-        run: |
-          echo "Resultado -> $env:MVN_RELEASE_ARGS   , $env.MVN_RELEASE_ARGS , FIN"
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - run: npm install
+      - run: xvfb-run -a npm test
+        if: runner.os == 'Linux'
+      - run: npm test
+        if: runner.os != 'Linux'
+      - name: Publish
+        if: success() && startsWith(github.ref, 'refs/tags/') && matrix.os == 'ubuntu-latest'
+        run: npm run package
+    
