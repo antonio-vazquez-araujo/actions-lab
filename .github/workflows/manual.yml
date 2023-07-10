@@ -1,20 +1,10 @@
-# This is a basic workflow that is manually triggered
-
 name: the-workflow
 
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
 on:
   workflow_dispatch:
-    inputs:
-      name:
-        description: "Person to greet"
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "greet"
-  greet:
-    # The type of runner that the job will run on
+  install:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,7 +15,5 @@ jobs:
         with:
           node-version: 16.x
       - run: npm install -g @vscode/vsce
-      - run : npm install 
       - run : npm run vsce
-
     
