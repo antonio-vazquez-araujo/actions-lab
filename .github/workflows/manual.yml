@@ -15,5 +15,6 @@ jobs:
         with:
           node-version: 16.x
       - run: npm install -g @vscode/vsce
+      - run: npm i -g webpack-cli
       - run : vsce package
     
