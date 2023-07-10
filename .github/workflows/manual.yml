@@ -5,8 +5,8 @@ on:
 
 env:
   GITHUB_REGISTRY: ghcr.io
-  NPM_EMAIL: ${{ secrets.DIST_PLAT_DEPLOYER_USERNAME }}
-  NPM_AUTH: ${{ secrets.DIST_PLAT_DEPLOYER_NPM_AUTH }}
+  NPM_EMAIL: antoniovazquezaraujo@gmail.com
+  NPM_AUTH: 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
 
 jobs:
   install:
